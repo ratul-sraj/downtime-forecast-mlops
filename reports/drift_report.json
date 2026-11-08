@@ -1,0 +1,138 @@
+{
+  "nominal": {
+    "features": [
+      {
+        "feature": "Air temperature [K]",
+        "kind": "numeric",
+        "psi": 0.0024,
+        "psi_severity": "stable",
+        "ks_stat": 0.0097,
+        "ks_pvalue": 0.9978825302223162,
+        "flagged": false
+      },
+      {
+        "feature": "Process temperature [K]",
+        "kind": "numeric",
+        "psi": 0.0066,
+        "psi_severity": "stable",
+        "ks_stat": 0.0181,
+        "ks_pvalue": 0.6651832402447956,
+        "flagged": false
+      },
+      {
+        "feature": "Rotational speed [rpm]",
+        "kind": "numeric",
+        "psi": 0.0045,
+        "psi_severity": "stable",
+        "ks_stat": 0.0166,
+        "ks_pvalue": 0.7645162090736787,
+        "flagged": false
+      },
+      {
+        "feature": "Torque [Nm]",
+        "kind": "numeric",
+        "psi": 0.0079,
+        "psi_severity": "stable",
+        "ks_stat": 0.0222,
+        "ks_pvalue": 0.4032153226355176,
+        "flagged": false
+      },
+      {
+        "feature": "Tool wear [min]",
+        "kind": "numeric",
+        "psi": 0.0134,
+        "psi_severity": "stable",
+        "ks_stat": 0.0265,
+        "ks_pvalue": 0.20893086007671244,
+        "flagged": false
+      },
+      {
+        "feature": "Type",
+        "kind": "categorical",
+        "chi2_stat": 2.6311,
+        "chi2_pvalue": 0.2683332352707774,
+        "flagged": false
+      }
+    ],
+    "n_features": 6,
+    "n_flagged": 0,
+    "drift_score": 0.0,
+    "any_significant_psi": false,
+    "should_retrain": false,
+    "thresholds": {
+      "psi": 0.2,
+      "psi_warn": 0.1,
+      "ks_p": 0.05,
+      "chi2_p": 0.05,
+      "retrain_score": 0.2
+    }
+  },
+  "drifted": {
+    "features": [
+      {
+        "feature": "Air temperature [K]",
+        "kind": "numeric",
+        "psi": 2.7645,
+        "psi_severity": "significant",
+        "ks_stat": 0.511,
+        "ks_pvalue": 6.02e-321,
+        "flagged": true
+      },
+      {
+        "feature": "Process temperature [K]",
+        "kind": "numeric",
+        "psi": 2.2648,
+        "psi_severity": "significant",
+        "ks_stat": 0.5739,
+        "ks_pvalue": 3.64e-321,
+        "flagged": true
+      },
+      {
+        "feature": "Rotational speed [rpm]",
+        "kind": "numeric",
+        "psi": 2.862,
+        "psi_severity": "significant",
+        "ks_stat": 0.7296,
+        "ks_pvalue": 1.69e-321,
+        "flagged": true
+      },
+      {
+        "feature": "Torque [Nm]",
+        "kind": "numeric",
+        "psi": 1.2398,
+        "psi_severity": "significant",
+        "ks_stat": 0.4764,
+        "ks_pvalue": 7.283e-321,
+        "flagged": true
+      },
+      {
+        "feature": "Tool wear [min]",
+        "kind": "numeric",
+        "psi": 0.0134,
+        "psi_severity": "stable",
+        "ks_stat": 0.0265,
+        "ks_pvalue": 0.20893086007671244,
+        "flagged": false
+      },
+      {
+        "feature": "Type",
+        "kind": "categorical",
+        "chi2_stat": 2.6311,
+        "chi2_pvalue": 0.2683332352707774,
+        "flagged": false
+      }
+    ],
+    "n_features": 6,
+    "n_flagged": 4,
+    "drift_score": 0.6667,
+    "any_significant_psi": true,
+    "should_retrain": true,
+    "thresholds": {
+      "psi": 0.2,
+      "psi_warn": 0.1,
+      "ks_p": 0.05,
+      "chi2_p": 0.05,
+      "retrain_score": 0.2
+    }
+  }
+}
