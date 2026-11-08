@@ -1,0 +1,14 @@
+# Optional "full MLOps" extras. NOT required to run the pipeline, tests or API —
+# the code falls back cleanly when these are absent. Install with:
+#     pip install -r requirements-extras.txt
+#
+#  * mlflow   -> used automatically by src/tracking.py when importable
+#                (falls back to the JSON-file tracker otherwise).
+#  * xgboost  -> used by src/models/classifier.py when backend="xgboost"
+#                (falls back to HistGradientBoostingClassifier otherwise).
+#  * airflow  -> the DAG in airflow/dags/ is importable without it; needed only
+#                to actually schedule the pipeline (see docker-compose.yml).
+#  * statsmodels -> not used; SES is implemented by hand in src/models/forecast.py
+mlflow>=2.9
+xgboost>=2.0
+# apache-airflow>=2.8   # heavy; run via docker-compose instead of pip

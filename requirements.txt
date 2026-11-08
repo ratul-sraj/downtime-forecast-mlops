@@ -1,0 +1,14 @@
+# Core runtime + training + serving dependencies.
+# These are the only packages needed to run the pipeline, tests and API locally.
+numpy>=1.24
+pandas>=2.0
+scikit-learn>=1.3
+scipy>=1.10
+pydantic>=2.5
+fastapi>=0.110
+uvicorn>=0.27
+joblib>=1.3
+matplotlib>=3.7
+pytest>=7.4
+httpx>=0.27
+# Optional heavier extras + orchestration live in requirements-extras.txt

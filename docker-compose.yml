@@ -1,0 +1,62 @@
+# docker-compose.yml — OPTIONAL full MLOps stack (Airflow + MLflow tracking server).
+#
+# This compose file is NOT used in CI or by the default local workflow. The
+# pipeline runs end-to-end today with only the core requirements (see README):
+# tracking uses the JSON-file fallback when mlflow is absent, and the Airflow
+# DAG is importable without Airflow installed. Use this only if you want the
+# "real" scheduler + tracking server running locally.
+#
+#     docker compose up -d
+#
+version: "3.8"
+
+services:
+  # ---------------------------------------------------------------------------
+  # MLflow tracking server (sqlite-backed, zero extra services)
+  # ---------------------------------------------------------------------------
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.14.1
+    command: >
+      mlflow server
+      --host 0.0.0.0 --port 5000
+      --backend-store-uri sqlite:////mlflow/mlflow.db
+      --default-artifact-root /mlflow/artifacts
+    ports:
+      - "5000:5000"
+    volumes:
+      - mlflow-data:/mlflow
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:5000/health').status==200 else 1)"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+
+  # ---------------------------------------------------------------------------
+  # Airflow (standalone: webserver + scheduler in one container, sqlite metadata)
+  # ---------------------------------------------------------------------------
+  airflow:
+    image: apache/airflow:2.9.3-python3.11
+    depends_on:
+      - mlflow
+    environment:
+      AIRFLOW__CORE__EXECUTOR: SequentialExecutor
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: sqlite:////opt/airflow/airflow.db
+      AIRFLOW__CORE__DAGS_FOLDER: /opt/airflow/dags
+      # Make the MLflow server reachable from tasks.
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+      _PIP_ADDITIONAL_REQUIREMENTS: >-
+        pandas scikit-learn fastapi uvicorn pydantic joblib matplotlib mlflow
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./:/opt/airflow/repo
+    ports:
+      - "8080:8080"
+    command: >
+      bash -c "airflow db migrate &&
+               airflow users create --username admin --password admin
+                 --firstname a --lastname b --role Admin --email a@b.c ;
+               airflow standalone"
+
+volumes:
+  mlflow-data:
